@@ -10,9 +10,10 @@
 4. `npm i express --save`
 5. Tạo folders: `controllers`, `services`, `models`, `utils`
 
-## 2. Khởi tạo và start server 
+## 2. Khởi tạo và start server
 
 1. trong folder `src` tạo file `app.js`
+
    - tạo ứng dụng express
    - tạo middleware
    - tạo database
@@ -21,8 +22,8 @@
 
 2. Các package được sử dụng
    - morgan: show thông tin request/response
-      `GET / 200 2.524 ms`
+     `GET / 200 2.524 ms`
    - helmet: bảo vệ header request tránh khỏi hacker
    - compression: nén data lại để gửi đi (dung lượng file gửi tới client nhỏ => nhanh)
-3. Dùng `node server.js` để  start server 
-   > file `server.js` chỉ dùng để start server không làm bất cứ config nào trong file này
+3. Dùng `node server.js` để start server
+   > file `server.js` chỉ dùng để start server không làm bất cứ config nào trong file này.
