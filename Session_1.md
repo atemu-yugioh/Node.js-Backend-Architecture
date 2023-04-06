@@ -6,7 +6,7 @@
    - `src`: chứa source code của dự án
    - `server.js`: file dùng để start/stop server
 2. `npm init -y`: khởi tạo dự án sinh ra file package.json
-3. Tạo file `.evn` cùng cấp với folders `src` chứa các biến môi trường 'DEV', 'PRODUCTION'
+3. Tạo file `.env` cùng cấp với folders `src` chứa các biến môi trường 'DEV', 'PRODUCTION'
 4. `npm i express --save`
 5. Tạo folders: `controllers`, `services`, `models`, `utils`
 
