@@ -1,12 +1,12 @@
 ### singup
 
-@url_dev=http://localhost:5000/v1/api/
+@url_dev=http://localhost:5001/v1/api/
 
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
 
 {
-    "name": "Shoppe",
-    "email": "shoppe@gmail.com",
-    "password": "123123"
+    "name": "Tiky",
+    "email": "Tiky1@gmail.com",
+    "password": "111111"
 }
