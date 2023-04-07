@@ -23,6 +23,11 @@ const keyTokenSchema = new Schema(
       required: true,
     },
     refreshToken: {
+      type: String,
+      required: true,
+    },
+    // ! Những refreshToken đã được sử dụng
+    refreshTokensUsed: {
       type: Array,
       default: [],
     },
