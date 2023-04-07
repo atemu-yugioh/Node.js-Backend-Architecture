@@ -1,10 +1,10 @@
 ### singup
 
-@url_dev=http://localhost:5001/v1/api/
+@url_dev=http://localhost:5000/v1/api/
 
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
-x-api-key: 1cc4afb26169285aa3767bf37a10220ef096274495ad2b7ae2d22273e3d13f53cb095ccb294f6bb645628fabcadd565cb4ed8e1e038fd5a5cc20c1d1ae67a190
+x-api-key: 57c09b8318f11b3555d7c154816b07d48ae57482c135cdf64392c6e0b990f414978ec0c70e68d1421dfe7c456fa471705d0709fd7dfc8afab5f6b7998003f6dc
 
 {
     "name": "Tiky",
