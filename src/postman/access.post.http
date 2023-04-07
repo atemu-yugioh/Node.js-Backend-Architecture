@@ -4,10 +4,24 @@
 
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
-x-api-key: 57c09b8318f11b3555d7c154816b07d48ae57482c135cdf64392c6e0b990f414978ec0c70e68d1421dfe7c456fa471705d0709fd7dfc8afab5f6b7998003f6dc
+x-api-key: e28b220f5a2e2a9162131ffb576ed7def0bc737419dcfb76dfed6f918f02301981e4c1ac9cc5a47a95149f272c6fce5dcf05c6cc05bd2dfc513d61ae09a7e44f
 
 {
-    "name": "Tiky2",
-    "email": "Tiky2@gmail.com",
+    "name": "TikiShop",
+    "email": "Tikyshop@gmail.com",
+    "password": "111111"
+}
+
+
+### login
+
+
+POST http://localhost:5000/v1/api//shop/login
+Content-Type: application/json
+x-api-key: e28b220f5a2e2a9162131ffb576ed7def0bc737419dcfb76dfed6f918f02301981e4c1ac9cc5a47a95149f272c6fce5dcf05c6cc05bd2dfc513d61ae09a7e44f
+
+{
+    
+    "email": "Tikyshop@gmail.com",
     "password": "111111"
 }

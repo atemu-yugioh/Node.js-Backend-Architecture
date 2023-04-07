@@ -5,7 +5,10 @@ const crypto = require("crypto");
 const KeyTokenService = require("./keyToken.service");
 const { createTokenPair } = require("../auth/authUtils");
 const { getInfoData } = require("../utils");
-const { BadRequestError } = require("../core/error.response");
+const { BadRequestError, AuthFailureError } = require("../core/error.response");
+
+// ** SERVICE
+const ShopService = require("./shop.service");
 
 const RoleShop = {
   SHOP: "001",
@@ -15,6 +18,52 @@ const RoleShop = {
 };
 
 class AccessService {
+  /**
+   * ? 1 - check email in dbs
+   * ? 2 - match password
+   * ? 3 - create AT vs RT and save
+   * ? 4 - generate tokens
+   * ? 5 - get data return login
+   */
+  static login = async ({ email, password, refreshToken = null }) => {
+    //? 1.
+    const foundShop = await ShopService.findByEmail({ email });
+    if (!foundShop) {
+      throw new BadRequestError("Shop not registered!!!");
+    }
+
+    //? 2.
+    const match = bcrypt.compare(password, foundShop.password);
+    if (!match) throw new AuthFailureError("Authentication error!");
+
+    //? 3.
+    //? create privateKey and publicKey
+    const privateKey = crypto.randomBytes(64).toString("hex");
+    const publicKey = crypto.randomBytes(64).toString("hex");
+
+    //? 4. generate tokens
+    const { _id: userId } = foundShop;
+    const tokens = await createTokenPair(
+      { userId: userId, email },
+      publicKey,
+      privateKey
+    );
+    await KeyTokenService.createKeyToken({
+      userId: userId,
+      publicKey,
+      privateKey,
+      refreshToken: tokens.refreshToken,
+    });
+
+    return {
+      shop: getInfoData({
+        fields: ["_id", "name", "email"],
+        object: foundShop,
+      }),
+      tokens,
+    };
+  };
+
   static signUp = async ({ name, email, password }) => {
     // ? Step 1: check email exist
 
@@ -49,10 +98,20 @@ class AccessService {
       const publicKey = crypto.randomBytes(64).toString("hex");
       //? Public key CryptoGraphy standards
 
+      // ? create token pair
+      const tokens = await createTokenPair(
+        { userId: newShop._id, email },
+        publicKey,
+        privateKey
+      );
+
+      //? Save KeyStore
+
       const keyStore = await KeyTokenService.createKeyToken({
         userId: newShop._id,
         publicKey,
         privateKey,
+        refreshToken: tokens.refreshToken,
       });
 
       if (!keyStore) {
@@ -61,13 +120,6 @@ class AccessService {
           message: "keyStore error",
         };
       }
-
-      // ? create token pair
-      const tokens = await createTokenPair(
-        { userId: newShop._id, email },
-        publicKey,
-        privateKey
-      );
 
       return {
         code: 201,
