@@ -25,3 +25,15 @@ x-api-key: e28b220f5a2e2a9162131ffb576ed7def0bc737419dcfb76dfed6f918f02301981e4c
     "email": "Tikyshop@gmail.com",
     "password": "111111"
 }
+
+
+### logout
+
+
+POST http://localhost:5000/v1/api//shop/logout
+Content-Type: application/json
+x-api-key: e28b220f5a2e2a9162131ffb576ed7def0bc737419dcfb76dfed6f918f02301981e4c1ac9cc5a47a95149f272c6fce5dcf05c6cc05bd2dfc513d61ae09a7e44f
+x-client-id: 642fbf0379c553a68f2b422d
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDJmYmYwMzc5YzU1M2E2OGYyYjQyMmQiLCJlbWFpbCI6IlRpa3lzaG9wQGdtYWlsLmNvbSIsImlhdCI6MTY4MDg1Nzk4NSwiZXhwIjoxNjgxMDMwNzg1fQ.g7j25QUG2iQWxPpONcnxGD6ak6HsvRI4NilP5Ya_D-4
+
+
