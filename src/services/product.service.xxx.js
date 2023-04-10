@@ -7,6 +7,14 @@ const {
   clothing,
   furniture,
 } = require("../models/product.model");
+const {
+  findAllDraftsForShop,
+  publishProductByShop,
+  unPublishProductByShop,
+  searchProductByUser,
+  findAllProducts,
+  findProduct,
+} = require("../models/repositories/product.repo");
 
 class ProductFactory {
   static productRegistry = {}; // key-class
@@ -18,6 +26,46 @@ class ProductFactory {
     if (!productClass)
       throw new BadRequestError(`Invalid Product type: ${type}`);
     return new productClass(payload).createProduct();
+  }
+
+  static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isDraft: true };
+    return await findAllDraftsForShop({ query, limit, skip });
+  }
+
+  static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isDraft: false };
+    return await findAllDraftsForShop({ query, limit, skip });
+  }
+
+  static async publishProductByShop({ product_shop, product_id }) {
+    return await publishProductByShop({ product_shop, product_id });
+  }
+
+  static async unPublishProductByShop({ product_shop, product_id }) {
+    return await unPublishProductByShop({ product_shop, product_id });
+  }
+
+  static async getListSearchProduct({ key_search }) {
+    return await searchProductByUser({ key_search });
+  }
+
+  static async findAllProducts({
+    limit = 50,
+    sort = "ctime",
+    page = 1,
+    filter = { isPublish: true },
+  }) {
+    return await findAllProducts({
+      limit,
+      sort,
+      page,
+      filter,
+      select: ["product_name", "product_type", "product_thumb"],
+    });
+  }
+  static async findProduct({ product_id }) {
+    return await findProduct({ product_id, unselect: ["__v"] });
   }
 }
 
