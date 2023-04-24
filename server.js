@@ -1,8 +1,9 @@
 const app = require("./src/app");
+const {
+  app: { port },
+} = require("./src/configs/config.mongodb");
 
-const PORT = 5000;
-
-const server = app.listen(PORT, () => {
+const server = app.listen(port, () => {
   console.log("Web Service Is Starting !!!");
 });
 

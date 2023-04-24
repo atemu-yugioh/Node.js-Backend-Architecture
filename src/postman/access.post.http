@@ -1,0 +1,46 @@
+### singup
+
+@url_dev=http://localhost:5001/v1/api/
+
+POST {{url_dev}}/shop/signup
+Content-Type: application/json
+x-api-key: 1cc4afb26169285aa3767bf37a10220ef096274495ad2b7ae2d22273e3d13f53cb095ccb294f6bb645628fabcadd565cb4ed8e1e038fd5a5cc20c1d1ae67a190
+
+{
+    "name": "TikiShop",
+    "email": "Tikyshop@gmail.com",
+    "password": "111111"
+}
+
+
+### login
+
+
+POST {{url_dev}}/shop/login
+Content-Type: application/json
+x-api-key: 1cc4afb26169285aa3767bf37a10220ef096274495ad2b7ae2d22273e3d13f53cb095ccb294f6bb645628fabcadd565cb4ed8e1e038fd5a5cc20c1d1ae67a190
+
+{
+    
+    "email": "Tikyshop@gmail.com",
+    "password": "111111"
+}
+
+
+### logout
+
+
+POST {{url_dev}}/shop/logout
+Content-Type: application/json
+x-api-key: 1cc4afb26169285aa3767bf37a10220ef096274495ad2b7ae2d22273e3d13f53cb095ccb294f6bb645628fabcadd565cb4ed8e1e038fd5a5cc20c1d1ae67a190
+x-client-id: 643126efbf1f2279286fec52
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMxMjZlZmJmMWYyMjc5Mjg2ZmVjNTIiLCJlbWFpbCI6IlRpa3lzaG9wQGdtYWlsLmNvbSIsImlhdCI6MTY4MDk0MjkzNCwiZXhwIjoxNjgxMTE1NzM0fQ.X7cEepThyfCmWlQ2ZQt5-lD3xV-u7vff56WdpY5EZFE
+
+### handle refresh token
+
+
+POST {{url_dev}}/shop/handleRefreshToken
+Content-Type: application/json
+x-api-key: 1cc4afb26169285aa3767bf37a10220ef096274495ad2b7ae2d22273e3d13f53cb095ccb294f6bb645628fabcadd565cb4ed8e1e038fd5a5cc20c1d1ae67a190
+x-client-id: 643126efbf1f2279286fec52
+x-rtoken-id: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDMxMjZlZmJmMWYyMjc5Mjg2ZmVjNTIiLCJlbWFpbCI6IlRpa3lzaG9wQGdtYWlsLmNvbSIsImlhdCI6MTY4MDk0MzM5MCwiZXhwIjoxNjgxNTQ4MTkwfQ.bF1EG6TDI9bunULctwkBhQh0z4i7xEWzpESHKO0Mgyg
