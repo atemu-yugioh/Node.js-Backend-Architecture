@@ -1,4 +1,4 @@
-const { product, electronic, clothing } = require("../../models/product.model");
+const { product, electronic, clothing } = require("../product.model");
 const { Types } = require("mongoose");
 const { getSelectData, unGetSelectData } = require("../../utils");
 
