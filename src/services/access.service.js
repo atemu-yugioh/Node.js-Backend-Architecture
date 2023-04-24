@@ -23,10 +23,6 @@ const RoleShop = {
 
 class AccessService {
   static handlerRefreshTokenV2 = async ({ user, keyStore, refreshToken }) => {
-    console.log(
-      "🚀 ~ file: access.service.js:26 ~ AccessService ~ handlerRefreshTokenV2= ~ keyStore:",
-      keyStore
-    );
     const { userId, email } = user;
 
     //? Check refreshToken này đã được sử dụng chưa
