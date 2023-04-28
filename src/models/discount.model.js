@@ -10,8 +10,8 @@ const discountSchema = new Schema(
     discount_type: { type: String, default: "fixed_amount" }, // percentage
     discount_value: { type: Number, required: true },
     discount_code: { type: String, required: true }, // discount Code
-    discount_start_day: { type: Date, required: true }, // start day discount
-    discount_end_day: { type: Date, required: true }, // end day discount
+    discount_start_date: { type: Date, required: true }, // start day discount
+    discount_end_date: { type: Date, required: true }, // end day discount
     discount_max_uses: { type: Number, required: true }, // so luong discount duoc su dung
     discount_uses_count: { type: Number, require: true }, // so luong discount da su dung
     discount_users_used: { type: Array, default: [] }, // ai da su dung
@@ -19,6 +19,7 @@ const discountSchema = new Schema(
     discount_min_order_value: { type: Number, required: true }, // gia tri toi thieu de ap dung discount
     discount_shopId: { type: Schema.Types.ObjectId, ref: "Shop" },
     discount_is_active: { type: Boolean, default: true },
+    discount_max_value: { type: Number },
     discount_applies_to: {
       type: String,
       required: true,
