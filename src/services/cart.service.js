@@ -1,6 +1,8 @@
 "use strict";
 
+const { NotFoundError } = require("../core/error.response");
 const { cart } = require("../models/cart.model");
+const { getProductById } = require("../models/repositories/product.repo");
 const { convertToObjectIdMongodb } = require("../utils");
 
 class CartService {
@@ -69,6 +71,50 @@ class CartService {
     }
     // cart exist, and this product in cart => update quantity
     return await CartService.updateUserCartQuantity({ userId, product });
+  }
+
+  //update cart (increase and reduce cart)
+  /*
+    shop_order_ids: [
+        {
+            shopId,
+            item_products: [
+                {
+                    quantity,
+                    price,
+                    shopId,
+                    old_quantity,
+                    productId
+                }
+            ],
+            version
+        }
+    ]
+  */
+  static async addToCartV2({ userId, product = {} }) {
+    const { productId, quantity, old_quantity } =
+      shop_order_ids[0]?.item_products[0];
+    // check product
+    const foundProduct = await getProductById(productId);
+    if (!foundProduct) {
+      throw new NotFoundError("product not found!!");
+    }
+    // compare
+    if (foundProduct.product_shop.toString() !== shop_order_ids[0]?.shopId) {
+      throw new NotFoundError("Product do not belong to the shop");
+    }
+
+    if (quantity == 0) {
+      // delete
+    }
+
+    return await CartService.updateUserCartQuantity({
+      userId,
+      product: {
+        productId,
+        quantity: quantity - old_quantity,
+      },
+    });
   }
 }
 
