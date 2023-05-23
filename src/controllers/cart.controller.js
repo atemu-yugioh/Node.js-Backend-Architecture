@@ -28,7 +28,6 @@ class CartController {
     new SuccessResponse({
       message: "Delete cart success!!",
       metaData: await CartService.deleteCartItem({
-        userId: req.user.userId,
         ...req.body,
       }),
     }).send(res);
@@ -38,8 +37,10 @@ class CartController {
   listToCart = async (req, res, next) => {
     new SuccessResponse({
       message: "List to cart",
-      metaData: await CartService.getListUserCart({ userId: req.user.userId }),
-    });
+      metaData: await CartService.getListUserCart({
+        userId: req.query.user_id,
+      }),
+    }).send(res);
   };
 }
 

@@ -91,11 +91,12 @@ class CartService {
         }
     ]
   */
-  static async addToCartV2({ userId, product = {} }) {
+  static async addToCartV2({ userId, shop_order_ids = {} }) {
     const { productId, quantity, old_quantity } =
       shop_order_ids[0]?.item_products[0];
     // check product
     const foundProduct = await getProductById(productId);
+
     if (!foundProduct) {
       throw new NotFoundError("product not found!!");
     }
@@ -125,6 +126,9 @@ class CartService {
         cart_products: {
           productId,
         },
+      },
+      $inc: {
+        cart_count_products: -1,
       },
     };
 
