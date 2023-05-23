@@ -1,6 +1,7 @@
 "use strict";
 
 const { cart } = require("../models/cart.model");
+const { convertToObjectIdMongodb } = require("../utils");
 
 class CartService {
   /// START REPO CART ///
@@ -9,6 +10,9 @@ class CartService {
     const updateOrInsert = {
       $addToSet: {
         cart_products: product,
+      },
+      $inc: {
+        cart_count_products: 1,
       },
     };
     const option = { upsert: true, new: true };
@@ -33,8 +37,11 @@ class CartService {
     return await cart.findOneAndUpdate(query, updateSet, option);
   }
 
-  static async checkProductInCart({ userId, productId }) {
-    const query = { cart_userId: userId, "cart_products.productId": productId };
+  static async checkProductInCart({ cartId, productId }) {
+    const query = {
+      _id: convertToObjectIdMongodb(cartId),
+      "cart_products.productId": productId,
+    };
 
     return await cart.findOne(query);
   }
@@ -50,25 +57,18 @@ class CartService {
       return await CartService.createUserCart({ userId, product });
     }
 
-    // cart exist but no product
-    if (!userCart.cart_products.length) {
-      userCart.cart_products = [product];
-      return await userCart.save();
-    }
-
     // check product in cart ??
     const productInCart = await CartService.checkProductInCart({
-      userId,
+      cartId: userCart._id,
       productId,
     });
 
-    if (productInCart) {
-      // cart exist, and this product in cart => update quantity
-      return await CartService.updateUserCartQuantity({ userId, product });
+    if (!productInCart) {
+      // create cart for user
+      return await CartService.createUserCart({ userId, product });
     }
-
-    // create cart for user
-    return await CartService.createUserCart({ userId, product });
+    // cart exist, and this product in cart => update quantity
+    return await CartService.updateUserCartQuantity({ userId, product });
   }
 }
 
