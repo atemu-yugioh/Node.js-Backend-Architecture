@@ -105,7 +105,7 @@ class CartService {
     }
 
     if (quantity == 0) {
-      // delete
+      return await CartService.deleteCartItem({ userId, productId });
     }
 
     return await CartService.updateUserCartQuantity({
@@ -115,6 +115,31 @@ class CartService {
         quantity: quantity - old_quantity,
       },
     });
+  }
+
+  // delete cart item
+  static async deleteCartItem({ userId, productId }) {
+    const query = { cart_userId: userId, cart_state: "active" };
+    const updateSet = {
+      $pull: {
+        cart_products: {
+          productId,
+        },
+      },
+    };
+
+    const cartItemDeleted = await cart.updateOne(query, updateSet);
+
+    return cartItemDeleted;
+  }
+
+  // get list user cart
+  static async getListUserCart({ userId }) {
+    return await cart
+      .findOne({
+        cart_userId: +userId,
+      })
+      .lean();
   }
 }
 

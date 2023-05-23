@@ -11,6 +11,36 @@ class CartController {
       }),
     }).send(res);
   };
+
+  // update
+  update = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Update cart success!!",
+      metaData: await CartService.addToCartV2({
+        userId: req.user.userId,
+        ...req.body,
+      }),
+    }).send(res);
+  };
+
+  // delete
+  delete = async (req, res, next) => {
+    new SuccessResponse({
+      message: "Delete cart success!!",
+      metaData: await CartService.deleteCartItem({
+        userId: req.user.userId,
+        ...req.body,
+      }),
+    }).send(res);
+  };
+
+  // get list user cart
+  listToCart = async (req, res, next) => {
+    new SuccessResponse({
+      message: "List to cart",
+      metaData: await CartService.getListUserCart({ userId: req.user.userId }),
+    });
+  };
 }
 
 module.exports = new CartController();

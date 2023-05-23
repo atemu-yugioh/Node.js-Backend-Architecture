@@ -10,5 +10,8 @@ const router = express.Router();
 router.use(authenticationV2);
 //?/?////////////////
 router.post("", asyncHandler(cartController.addToCart));
+router.delete("", asyncHandler(cartController.delete));
+router.post("/update", asyncHandler(cartController.update));
+router.get("", asyncHandler(cartController.listToCart));
 
 module.exports = router;
