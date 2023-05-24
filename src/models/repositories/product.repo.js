@@ -112,7 +112,7 @@ const checkProductByServer = async (products) => {
       const foundProduct = await getProductById(product.productId);
       if (foundProduct) {
         return {
-          price: foundProduct.product_price,
+          price: foundProduct.product_price, // phải lấy price từ server không phải từ client (không tin client)
           quantity: product.quantity,
           productId: product.productId,
         };

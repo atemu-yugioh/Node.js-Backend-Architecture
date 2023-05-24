@@ -12,7 +12,10 @@ const inventorySchema = new Schema(
     inven_reservations: { type: Array, default: [] },
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: "createOn",
+      updatedAt: "updateOn",
+    },
     collection: COLLECTION_NAME,
   }
 );
