@@ -137,6 +137,20 @@ class CartService {
     return cartItemDeleted;
   }
 
+  // delete user cart
+  static async deleteCartUser({ userId }) {
+    const query = { cart_userId: +userId, cart_state: "active" };
+    const updateSet = {
+      $set: {
+        cart_products: [],
+        cart_count_products: 0,
+      },
+    };
+    const cartDeleted = await cart.updateOne(query, updateSet);
+
+    return cartDeleted;
+  }
+
   // get list user cart
   static async getListUserCart({ userId }) {
     return await cart

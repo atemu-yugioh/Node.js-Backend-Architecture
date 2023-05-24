@@ -1,8 +1,10 @@
 "use strict";
 
 const { BadRequestError } = require("../core/error.response");
+const { order } = require("../models/order.model");
 const { findCartById } = require("../models/repositories/cart.repo");
 const { checkProductByServer } = require("../models/repositories/product.repo");
+const { deleteCartUser } = require("./cart.service");
 const { getDiscountAmount } = require("./discount.service");
 const { acquireLock, releaseLock } = require("./redis.service");
 
@@ -167,6 +169,21 @@ class CheckoutService {
     }
 
     // thành công => tạo order
+    const newOrder = await order.create({
+      order_userId: userId,
+      order_checkout: checkout_order,
+      order_shipping: user_address,
+      order_payment: user_payment,
+      order_products: shop_order_ids_new,
+    });
+
+    // trường hợp: Insert thành công, remove product có trong cart
+    if (newOrder) {
+      // remove product in cart
+      deleteCartUser({ userId });
+    }
+
+    return newOrder;
   }
 }
 
