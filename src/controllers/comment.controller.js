@@ -15,6 +15,13 @@ class CommentController {
       metaData: await CommentService.getCommentByParentId({ ...req.query }),
     }).send(res);
   };
+
+  deleteComment = async (req, res, next) => {
+    new SuccessResponse({
+      message: "success",
+      metaData: await CommentService.deleteComment({ ...req.query }),
+    }).send(res);
+  };
 }
 
 module.exports = new CommentController();

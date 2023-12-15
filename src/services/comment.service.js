@@ -4,9 +4,10 @@
  * get list of comment: [User, Shop]
  * delete a comment: [User | Shop | Admin]
  */
-
+const mongoose = require("mongoose");
 const { BadRequestError } = require("../core/error.response");
 const Comment = require("../models/comment.model");
+const { getProductById } = require("../models/repositories/product.repo");
 const { convertToObjectIdMongodb } = require("../utils");
 
 class CommentService {
@@ -127,6 +128,60 @@ class CommentService {
       .sort({
         comment_left: 1,
       });
+  }
+
+  static async deleteComment({ commentId, productId }) {
+    const product = await getProductById(productId);
+
+    if (!product) {
+      throw new BadRequestError("product not exist!!");
+    }
+
+    const commentFound = await Comment.findById(commentId);
+
+    if (!commentFound) {
+      throw new BadRequestError("comment not exist!!");
+    }
+
+    const leftValue = commentFound.comment_left;
+    const rightValue = commentFound.comment_right;
+
+    // calculate width update
+    const width = rightValue - leftValue + 1;
+
+    // delete comment and child comment
+    await Comment.deleteMany({
+      comment_productId: convertToObjectIdMongodb(productId),
+      comment_left: { $gte: leftValue, $lte: rightValue },
+    });
+
+    // update right  value
+    await Comment.updateMany(
+      {
+        comment_productId: convertToObjectIdMongodb(productId),
+        comment_right: { $gt: rightValue },
+      },
+      {
+        $inc: {
+          comment_right: -width,
+        },
+      }
+    );
+
+    // update left value
+    await Comment.updateMany(
+      {
+        comment_productId: convertToObjectIdMongodb(productId),
+        comment_left: { $gt: rightValue },
+      },
+      {
+        $inc: {
+          comment_left: -width,
+        },
+      }
+    );
+
+    return true;
   }
 }
 
