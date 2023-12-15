@@ -7,7 +7,7 @@ const {
   clothing,
   furniture,
 } = require("../models/product.model");
-const { insertInventory } = require("../models/repositories/inventoty.repo");
+const { insertInventory } = require("../models/repositories/inventory.repo");
 const {
   findAllDraftsForShop,
   publishProductByShop,
