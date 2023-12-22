@@ -1,5 +1,6 @@
 "use strict";
 
+const { successMessage } = require("../../locales");
 const { SuccessResponse, CREATED } = require("../core/success.response");
 const AccessService = require("../services/access.service");
 
@@ -20,12 +21,13 @@ class AccessController {
   };
   login = async (req, res, next) => {
     new SuccessResponse({
+      message: req.t(successMessage.login_success),
       metaData: await AccessService.login(req.body),
     }).send(res);
   };
   signUp = async (req, res, next) => {
     new CREATED({
-      message: "Registered OK!",
+      message: req.t(successMessage.register_success),
       metaData: await AccessService.signUp(req.body),
       option: {
         limit: 10,

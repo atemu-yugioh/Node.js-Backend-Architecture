@@ -13,6 +13,7 @@ const {
 
 // ** SERVICE
 const ShopService = require("./shop.service");
+const { errorMessage } = require("../../locales");
 
 const RoleShop = {
   SHOP: "001",
@@ -139,7 +140,7 @@ class AccessService {
     //? 1.
     const foundShop = await ShopService.findByEmail({ email });
     if (!foundShop) {
-      throw new BadRequestError("Shop not registered!!!");
+      throw new BadRequestError(errorMessage.shop_not_registered);
     }
 
     //? 2.

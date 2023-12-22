@@ -1,0 +1,9 @@
+{
+    "login_success": "đăng nhập thành công",
+    "register_success": "đăng ký thành công",
+    "create_cart_success": "Tạo giỏ hàng thành công !!",
+    "update_cart_success": "Cập nhật giỏ hàng thành công!!",
+    "delete_cart_success": "Xóa giỏ hành thành công!!",
+    "shop_not_registered": "Shop chưa được đăng ký",
+    "create_product_success": "Tạo sản phẩm thành công !!"
+}

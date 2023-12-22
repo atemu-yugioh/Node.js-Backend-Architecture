@@ -1,0 +1,9 @@
+{
+  "login_success": "login successfully",
+  "register_success": "register successfully",
+  "create_cart_success": "Create cart success!!",
+  "update_cart_success": "Update cart success!!",
+  "delete_cart_success": "Delete cart success!!",
+  "shop_not_registered": "shop not registered",
+  "create_product_success": "Create product success !!"
+}
