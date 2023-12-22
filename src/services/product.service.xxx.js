@@ -18,6 +18,7 @@ const {
   updateProductById,
 } = require("../models/repositories/product.repo");
 const { removeUndefinedObject, updateNestedObjectParser } = require("../utils");
+const NotificationService = require("./notification.service");
 
 class ProductFactory {
   static productRegistry = {}; // key-class
@@ -110,6 +111,18 @@ class Product {
         productId: newProduct._id,
         shopId: this.product_shop,
         stock: this.product_quantity,
+      });
+
+      // push notification to system
+      // message queue to microservice
+      NotificationService.pushNotiToSystem({
+        type: "SHOP-001",
+        senderId: this.product_shop,
+        receiverId: 1,
+        options: {
+          product_name: this.product_name,
+          shop_name: this.product_shop,
+        },
       });
     }
 
